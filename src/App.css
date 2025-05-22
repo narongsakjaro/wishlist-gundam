@@ -15,11 +15,36 @@
 
 .container {
     width: 100%;
-    max-width: 1042px;
+    max-width: calc(200px * 4 + 3rem);
     margin: 20px auto 20px auto;
 }
 
+input {
+    border: 1px solid #0F0;
+    height: 2.5rem;
+    padding: 10px;
+    width: 100%;
+}
+
+input[type=text]:focus {
+    border: 1px solid #0F0;
+    outline: none;
+}
+
+button {
+    border: 1px solid #0F0;
+    padding: 0 1rem 0 1rem;
+}
+
+.form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: stretch;
+    gap: 10px;
+}
+
 .item-list {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     max-width: calc(200px * 4 + 3rem); /* 4 คอลัมน์ + ช่องว่าง */
@@ -57,3 +82,4 @@
     transform: scale(1.05);
     transition: all 0.3s ease;
 }
+

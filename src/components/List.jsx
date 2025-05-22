@@ -1,20 +1,6 @@
 import ItemList from "./ItemList.jsx";
 
-const List = () => {
-  const wishlist = [
-    {
-      id: 1,
-      name: "HG Gundam Calibarn",
-      img: "src/assets/img/caribarn.jpg",
-      price: 700,
-    },
-    {
-      id: 2,
-      name: "RG RX-78-2 GUNDAM VER 2.0",
-      img: "src/assets/img/rx-78-2v2.jpg",
-      price: 1190,
-    },
-  ];
+const List = ({ wishlist }) => {
   return (
     <>
       <div class="item-list">

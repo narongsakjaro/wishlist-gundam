@@ -1,12 +1,12 @@
 import List from "../components/List.jsx";
-
-const Wishlist = () => {
+import Container from "./Container.jsx";
+const Wishlist = ({ wishlist }) => {
   return (
     <>
       <section class="whishlist">
-        <div class="container">
-          <List />
-        </div>
+        <Container>
+          <List wishlist={wishlist} />
+        </Container>
       </section>
     </>
   );
