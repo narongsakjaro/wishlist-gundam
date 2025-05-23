@@ -23,6 +23,7 @@ function App() {
   const [wishlist, setWishlist] = useState(initialWishlist);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [image, setImage] = useState("");
 
   const handlerEnterName = (e) => {
     setName(e.target.value);
@@ -32,22 +33,46 @@ function App() {
     setPrice(e.target.value);
   };
 
-  const handlerAddItem = (e) => {
+  const handlerAddItem = async (e) => {
     e.preventDefault();
 
     if (!name || !price) return;
 
+    // base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+    let base64String = "";
+    if (image) {
+      base64String = await getBase64(image);
+    }
+
     const newGunpla = {
       id: wishlist.length + 1,
       name,
-      img: "src/assets/img/rx-78-2v2.jpg",
+      img: base64String,
       price,
     };
 
     setWishlist((prev) => [...prev, newGunpla]);
     setName("");
     setPrice("");
+    setImage("");
   };
+
+  const handlerInsertImage = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handlerExportData = () => {
+    const json = JSON.stringify(wishlist);
+    console.log(json);
+  };
+
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
 
   return (
     <>
@@ -57,7 +82,9 @@ function App() {
           price={price}
           onEnterName={handlerEnterName}
           onEnterPrice={handlerEnterPrice}
+          onInsertImage={handlerInsertImage}
           onAddItem={handlerAddItem}
+          onExportData={handlerExportData}
         />
         <Wishlist wishlist={wishlist} />
       </main>

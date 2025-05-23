@@ -5,7 +5,7 @@ const ItemList = ({ img, name, price }) => {
     <>
       <div className="card">
         <div className="card-content">
-          <img src={img} alt={img} />
+          <img src={img} />
           <div className="img-detail">
             <h4>{name}</h4>
             <p>Price : {price} $</p>
