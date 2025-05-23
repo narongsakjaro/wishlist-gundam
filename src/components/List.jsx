@@ -3,7 +3,7 @@ import ItemList from "./ItemList.jsx";
 const List = ({ wishlist }) => {
   return (
     <>
-      <div class="item-list">
+      <div className="item-list">
         {wishlist.map((item) => (
           <ItemList
             key={item.id}

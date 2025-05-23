@@ -3,7 +3,7 @@ import Container from "./Container.jsx";
 const Wishlist = ({ wishlist }) => {
   return (
     <>
-      <section class="whishlist">
+      <section className="whishlist">
         <Container>
           <List wishlist={wishlist} />
         </Container>
