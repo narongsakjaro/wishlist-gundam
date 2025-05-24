@@ -15,6 +15,7 @@ const GunplaForm = ({
       <Container>
         <div className="form">
           <input
+            className="input-text"
             type="text"
             id="name"
             placeholder="NAME"
@@ -23,6 +24,7 @@ const GunplaForm = ({
             required
           />
           <input
+            className="input-text"
             type="text"
             id="price"
             placeholder="PRICE"
@@ -30,9 +32,18 @@ const GunplaForm = ({
             onChange={onEnterPrice}
             required
           />
-          <input type="file" id="img-input" onChange={onInsertImage} />
-          <button onClick={onAddItem}>ADD</button>
-          <button onClick={onExportData}>EXPORT</button>
+          <input
+            className="input-text"
+            type="file"
+            id="img-input"
+            onChange={onInsertImage}
+          />
+          <button className="btn" onClick={onAddItem}>
+            ADD
+          </button>
+          <button className="btn btn-white" onClick={onExportData}>
+            EXPORT
+          </button>
         </div>
       </Container>
     </>

@@ -1,85 +1,133 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  /* Base Colors */
+  --color-background: #000000; /* True black */
+  --color-surface: #111111; /* Near black for cards and panels */
+  --color-elevated: #1a1a1a; /* Slightly lighter for elevated elements */
+  --color-border: #2a2a2a; /* Soft borders */
+  --color-overlay: rgba(255, 255, 255, 0.05);
+
+  /* Text Colors */
+  --color-text: #ffffff; /* White */
+  --color-muted-text: #999999; /* Muted gray */
+  --color-placeholder: #666666;
+
+  /* Accent / Brand Colors */
+  --color-accent: #0070f3; /* Vivid blue (Next.js brand color) */
+  --color-accent-hover: #3291ff;
+
+  /* Feedback Colors */
+  --color-success: #00e887;
+  --color-warning: #f5a623;
+  --color-error: #ff1a1a;
+
+  /* Shadows */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    font-family: "Exo 2", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    background-color: #121212;
-    color: rgb(20, 149, 20);
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: "Exo 2", sans-serif;
+}
+
+input,
+textarea,
+select,
+button {
+  outline: none;
 }
 
 .container {
-    width: 100%;
-    max-width: calc(200px * 4 + 3rem);
-    margin: 20px auto 20px auto;
+  width: 100%;
+  max-width: calc(200px * 4 + 3rem);
+  margin: 20px auto 20px auto;
 }
 
-input {
-    border: 1px solid #0F0;
-    height: 2.5rem;
-    padding: 10px;
-    width: 100%;
+.input-text {
+  border: 1px solid var(--color-border);
+  padding: 0.4rem 0.8rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: var(--color-surface);
+  color: var(--color-placeholder);
 }
 
-input[type=text]:focus {
-    border: 1px solid #0F0;
-    outline: none;
+.input-text:focus {
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
-button {
-    border: 1px solid #0F0;
-    padding: 0 1rem 0 1rem;
+.btn {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.btn-white {
+  background-color: white;
+  color: var(--color-elevated);
+}
+
+.btn:hover {
+  background-color: #1f1f1f;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .form {
-    display: flex;
-    justify-content: flex-end;
-    align-items: stretch;
-    gap: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  gap: 10px;
 }
 
 .item-list {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    max-width: calc(200px * 4 + 3rem); /* 4 คอลัมน์ + ช่องว่าง */
-    gap: 1rem;
-    margin: auto;
-    place-items: center;
-    
-    /* display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-content: center;
-    gap: 4px */
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  max-width: calc(200px * 4 + 3rem); /* 4 คอลัมน์ + ช่องว่าง */
+  gap: 1rem;
+  margin: auto;
+  place-items: center;
 }
 
 .card {
-    width: 100%;
-    max-width: 200px;
-    border: 1px solid #0F0;
-    padding: 10px;
-    margin-bottom: 1rem;
+  width: 100%;
+  max-width: 200px;
+  background-color: var(--color-surface);
+  margin-bottom: 1rem;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-content {
-    font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+  font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+  padding: 0.5rem 1rem 1rem 1rem;
 }
 
-.card-content img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+.card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  padding: 8px 8px 0 8px;
+  border-radius: 16px;
 }
 
 .card:hover {
-    transform: scale(1.05);
-    transition: all 0.3s ease;
+  transform: scale(1.01);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 1); /* Slightly stronger on hover */
 }
-
