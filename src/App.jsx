@@ -23,6 +23,8 @@ function reducer(formState, action) {
       return { ...formState, image: action.payload };
     case "setRefLink":
       return { ...formState, ref: action.payload };
+    case "resetForm":
+      return { ...initObject };
     default:
       return formState;
   }
@@ -52,6 +54,7 @@ function App() {
         image: base64String,
         ref: formState.ref,
       });
+      dispatch({ type: "resetForm" });
     } catch (err) {
       setStatus(`Failed to add: ${err}`);
       console.log(status);
