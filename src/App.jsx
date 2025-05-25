@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 
 import "./App.css";
 import Wishlist from "./components/Wishlist.jsx";
@@ -19,46 +19,52 @@ const initialWishlist = [
   },
 ];
 
+const initObject = {
+  name: "",
+  price: "",
+  image: "",
+  ref_link: "",
+};
+
+function reducer(formState, action) {
+  switch (action.type) {
+    case "setName":
+      return { ...formState, name: action.payload };
+    case "setPrice":
+      return { ...formState, price: action.payload };
+    case "setImage":
+      return { ...formState, image: action.payload };
+    case "setRefLink":
+      return { ...formState, ref_link: action.payload };
+    default:
+      return formState;
+  }
+}
+
 function App() {
   const [wishlist, setWishlist] = useState(initialWishlist);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
-
-  const handlerEnterName = (e) => {
-    setName(e.target.value);
-  };
-
-  const handlerEnterPrice = (e) => {
-    setPrice(e.target.value);
-  };
+  const [formState, dispatch] = useReducer(reducer, initObject);
 
   const handlerAddItem = async (e) => {
     e.preventDefault();
 
-    if (!name || !price) return;
+    if (!formState.name || !formState.price)
+      return console.log("Please fill the form");
 
     // base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
     let base64String = "";
-    if (image) {
-      base64String = await getBase64(image);
+    if (formState.image) {
+      base64String = await getBase64(formState.image);
     }
 
     const newGunpla = {
       id: wishlist.length + 1,
-      name,
+      name: formState.name,
+      price: formState.price,
       img: base64String,
-      price,
     };
 
     setWishlist((prev) => [...prev, newGunpla]);
-    setName("");
-    setPrice("");
-    setImage("");
-  };
-
-  const handlerInsertImage = (e) => {
-    setImage(e.target.files[0]);
   };
 
   const handlerExportData = () => {
@@ -78,11 +84,20 @@ function App() {
     <>
       <main>
         <GunplaForm
-          name={name}
-          price={price}
-          onEnterName={handlerEnterName}
-          onEnterPrice={handlerEnterPrice}
-          onInsertImage={handlerInsertImage}
+          name={formState.name}
+          price={formState.price}
+          onEnterName={(e) => {
+            dispatch({ type: "setName", payload: e.target.value });
+          }}
+          onEnterPrice={(e) =>
+            dispatch({ type: "setPrice", payload: e.target.value })
+          }
+          onInsertImage={(e) =>
+            dispatch({ type: "setImage", payload: e.target.files[0] })
+          }
+          onEnterRef={(e) =>
+            dispatch({ type: "setRefLink", payload: e.target.value })
+          }
           onAddItem={handlerAddItem}
           onExportData={handlerExportData}
         />
