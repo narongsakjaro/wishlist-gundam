@@ -3,27 +3,14 @@ import { useState, useReducer } from "react";
 import "./App.css";
 import Wishlist from "./components/Wishlist.jsx";
 import GunplaForm from "./components/GunplaForm.jsx";
-
-const initialWishlist = [
-  {
-    id: 1,
-    name: "HG Gundam Calibarn",
-    img: "src/assets/img/caribarn.jpg",
-    price: 700,
-  },
-  {
-    id: 2,
-    name: "RG RX-78-2 GUNDAM VER 2.0",
-    img: "src/assets/img/rx-78-2v2.jpg",
-    price: 1190,
-  },
-];
+import { db } from "./db/db.js";
+import { useLiveQuery } from "dexie-react-hooks";
 
 const initObject = {
   name: "",
   price: "",
   image: "",
-  ref_link: "",
+  ref: "",
 };
 
 function reducer(formState, action) {
@@ -35,40 +22,44 @@ function reducer(formState, action) {
     case "setImage":
       return { ...formState, image: action.payload };
     case "setRefLink":
-      return { ...formState, ref_link: action.payload };
+      return { ...formState, ref: action.payload };
     default:
       return formState;
   }
 }
 
 function App() {
-  const [wishlist, setWishlist] = useState(initialWishlist);
   const [formState, dispatch] = useReducer(reducer, initObject);
+  const [status, setStatus] = useState("");
 
-  const handlerAddItem = async (e) => {
+  const wishlist = useLiveQuery(() => db.wishlist.toArray());
+
+  const handlerAddGunpla = async (e) => {
     e.preventDefault();
 
     if (!formState.name || !formState.price)
       return console.log("Please fill the form");
 
-    // base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
     let base64String = "";
     if (formState.image) {
       base64String = await getBase64(formState.image);
     }
 
-    const newGunpla = {
-      id: wishlist.length + 1,
-      name: formState.name,
-      price: formState.price,
-      img: base64String,
-    };
-
-    setWishlist((prev) => [...prev, newGunpla]);
+    try {
+      await db.wishlist.add({
+        name: formState.name,
+        price: formState.price,
+        image: base64String,
+        ref: formState.ref,
+      });
+    } catch (err) {
+      setStatus(`Failed to add: ${err}`);
+      console.log(status);
+    }
   };
 
   const handlerExportData = () => {
-    const json = JSON.stringify(wishlist);
+    const json = JSON.stringify(wishlist ?? []);
     console.log(json);
   };
 
@@ -86,6 +77,7 @@ function App() {
         <GunplaForm
           name={formState.name}
           price={formState.price}
+          ref={formState.ref}
           onEnterName={(e) => {
             dispatch({ type: "setName", payload: e.target.value });
           }}
@@ -98,10 +90,10 @@ function App() {
           onEnterRef={(e) =>
             dispatch({ type: "setRefLink", payload: e.target.value })
           }
-          onAddItem={handlerAddItem}
+          onAddItem={handlerAddGunpla}
           onExportData={handlerExportData}
         />
-        <Wishlist wishlist={wishlist} />
+        <Wishlist wishlist={wishlist ?? []} />
       </main>
     </>
   );

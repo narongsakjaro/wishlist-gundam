@@ -7,8 +7,10 @@ const GunplaForm = ({
   onAddItem,
   onInsertImage,
   onExportData,
+  onEnterRef,
   name,
   price,
+  ref,
 }) => {
   return (
     <>
@@ -17,7 +19,6 @@ const GunplaForm = ({
           <input
             className="input-text"
             type="text"
-            id="name"
             placeholder="NAME"
             value={name}
             onChange={onEnterName}
@@ -26,11 +27,17 @@ const GunplaForm = ({
           <input
             className="input-text"
             type="text"
-            id="price"
             placeholder="PRICE"
             value={price}
             onChange={onEnterPrice}
             required
+          />
+          <input
+            className="input-text"
+            type="text"
+            placeholder="URL"
+            value={ref}
+            onChange={onEnterRef}
           />
           <input
             className="input-text"

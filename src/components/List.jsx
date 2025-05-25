@@ -8,8 +8,9 @@ const List = ({ wishlist }) => {
           <ItemList
             key={item.id}
             name={item.name}
-            img={item.img}
+            img={item.image}
             price={item.price}
+            ref={item.ref}
           />
         ))}
       </div>
