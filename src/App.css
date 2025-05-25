@@ -45,9 +45,14 @@ button {
   outline: none;
 }
 
+a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
 .container {
   width: 100%;
-  max-width: calc(200px * 4 + 3rem);
+  max-width: calc(200px * 5 + 3rem);
   margin: 20px auto 20px auto;
 }
 
@@ -117,6 +122,12 @@ button {
 .card-content {
   font-size: clamp(0.875rem, 1.5vw, 1.25rem);
   padding: 0.5rem 1rem 1rem 1rem;
+}
+
+.card-detail p,
+.card-detail h4 {
+  font-size: 1rem;
+  margin: 0.4rem 0;
 }
 
 .card img {
