@@ -1,1 +1,15 @@
 @import "tailwindcss";
+@tailwind utilities;
+
+body {
+  background-color: #121212;
+  @apply font-mono;
+}
+
+input {
+  @apply border-2 border-gray-100 rounded-xl h-10 placeholder:text-gray-500 p-3 focus:outline-none text-white focus:placeholder:text-gray-400;
+}
+
+button {
+  @apply rounded-xl border-2 border-gray-400 py-2 px-4 text-white bg-gray-900 hover:outline-2 hover:outline-pink-400;
+}

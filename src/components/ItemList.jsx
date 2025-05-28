@@ -1,13 +1,15 @@
 import React from "react";
+import Card from "./Card";
+import CardContent from "./CardContent";
 
 const ItemList = ({ img, name, price, ref }) => {
   return (
     <>
-      <div className="card">
-        <img src={img} alt={name} />
-        <div className="card-content">
+      <Card>
+        <img className="p-2 rounded-2xl" src={img} alt={name} />
+        <CardContent>
           <div className="card-detail">
-            <h4>
+            <h4 className="text-gray-200 line-clamp-2 text-balance leading-4.5 font-mono font-bold">
               {ref === null ? (
                 name
               ) : (
@@ -16,10 +18,10 @@ const ItemList = ({ img, name, price, ref }) => {
                 </a>
               )}
             </h4>
-            <p>Price : {price} $</p>
+            <p className="text-gray-400 font-mono">Price : {price} $</p>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </>
   );
 };
