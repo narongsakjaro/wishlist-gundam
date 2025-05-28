@@ -1,8 +1,11 @@
 import { useState, useReducer } from "react";
 
-import "./App.css";
+// import "./App.css";
 import Wishlist from "./components/Wishlist.jsx";
-import GunplaForm from "./components/GunplaForm.jsx";
+import InputForm from "./components/InputForm.jsx";
+import Container from "./components/Container.jsx";
+import Modal from "./components/Modal.jsx";
+
 import { db } from "./db/db.js";
 import { useLiveQuery } from "dexie-react-hooks";
 
@@ -33,6 +36,7 @@ function reducer(formState, action) {
 function App() {
   const [formState, dispatch] = useReducer(reducer, initObject);
   const [status, setStatus] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const wishlist = useLiveQuery(() => db.wishlist.toArray());
 
@@ -74,29 +78,52 @@ function App() {
       reader.readAsDataURL(file);
     });
 
+  const handlerCloseModal = () => {
+    setIsModalOpen(true);
+    dispatch({ type: "resetForm" });
+  };
+
   return (
     <>
-      <main>
-        <GunplaForm
-          name={formState.name}
-          price={formState.price}
-          ref={formState.ref}
-          onEnterName={(e) => {
-            dispatch({ type: "setName", payload: e.target.value });
-          }}
-          onEnterPrice={(e) =>
-            dispatch({ type: "setPrice", payload: e.target.value })
-          }
-          onInsertImage={(e) =>
-            dispatch({ type: "setImage", payload: e.target.files[0] })
-          }
-          onEnterRef={(e) =>
-            dispatch({ type: "setRefLink", payload: e.target.value })
-          }
-          onAddItem={handlerAddGunpla}
-          onExportData={handlerExportData}
-        />
-        <Wishlist wishlist={wishlist ?? []} />
+      <main className="mt-5">
+        <Container>
+          <div className="flex items-center mb-5">
+            <input
+              className="flex-4/5 outline-0"
+              type="text"
+              placeholder="SEARCH"
+            />
+            <button className="flex-1/5" onClick={handlerCloseModal}>
+              ADD
+            </button>
+          </div>
+          <Wishlist wishlist={wishlist ?? []} />
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onClost
+          >
+            <InputForm
+              name={formState.name}
+              price={formState.price}
+              ref={formState.ref}
+              onEnterName={(e) => {
+                dispatch({ type: "setName", payload: e.target.value });
+              }}
+              onEnterPrice={(e) =>
+                dispatch({ type: "setPrice", payload: e.target.value })
+              }
+              onInsertImage={(e) =>
+                dispatch({ type: "setImage", payload: e.target.files[0] })
+              }
+              onEnterRef={(e) =>
+                dispatch({ type: "setRefLink", payload: e.target.value })
+              }
+              onAddItem={handlerAddGunpla}
+              onExportData={handlerExportData}
+            />
+          </Modal>
+        </Container>
       </main>
     </>
   );
