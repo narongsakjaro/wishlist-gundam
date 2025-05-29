@@ -20,8 +20,6 @@ const AppRouter = () => {
           {/* Public routes */}
           <Route>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/" element={<Home />} />
             <Route path="/wishlist" element={<Wishlist />} />
           </Route>
 
